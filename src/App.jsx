@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { getAnimeList, getAnimeTop, searchAnime } from "./api";
+import { Link } from "react-router-dom";
 
 const App = () => {
   const [animes, setAnimes] = useState([]);
@@ -68,38 +69,49 @@ const App = () => {
 
           return (
             <div
-              key={anime?.mal_id ?? i}
-              className="max-w-sm bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200"
-            >
-              <img src={imageUrl} alt={title} className="w-full h-80 object-cover" />
+  key={anime?.mal_id ?? i}
+  className="relative max-w-sm bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200"
+>
+  <img
+    src={imageUrl}
+    alt={title}
+    className="w-full h-80 object-cover"
+  />
 
-              <div className="p-4 flex flex-col justify-between h-56">
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900 mb-2 truncate">{title}</h2>
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-2">{genres}</p>
-                  <div className="text-center text-sm text-gray-500 mb-3">
-                    {anime?.year ?? "Unknown Year"}
-                  </div>
-                </div>
+  <div className="absolute top-2 left-2 bg-black/60 text-white text-sm font-bold px-2 py-1 rounded-md">
+    {anime?.rank ? `#${anime.rank}` : "No Rank"}
+  </div>
 
-                {anime?.trailer?.embed_url ? (
-                  <div className="text-center">
-                    <a
-                      href={anime.trailer.embed_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block bg-white/20 border border-white/30 backdrop-blur-md text-black text-sm font-medium py-2 px-4 rounded-lg shadow-lg hover:bg-white/30 hover:backdrop-blur-lg hover:shadow-xl transition-all duration-300 w-full"
-                    >
-                      🎬 Watch Trailer
-                    </a>
-                  </div>
-                ) : (
-                  <div className="py-2 px-4 text-center text-gray-400 text-sm italic">
-                    No trailer available
-                  </div>
-                )}
-              </div>
-            </div>
+  <div className="p-4 flex flex-col justify-between h-56">
+    <div>
+      <h2 className="text-md font-semibold text-gray-900 mb-2 truncate">
+        {title}
+      </h2>
+      <p className="text-gray-600 text-sm mb-3 line-clamp-2">{genres}</p>
+      <div className="text-center text-sm text-gray-500 mb-3">
+        {anime?.year ?? "Unknown Year"}
+      </div>
+    </div>
+
+    {anime?.trailer?.embed_url ? (
+      <div className="text-center">
+        <a
+          href={anime.trailer.embed_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-white/20 border border-white/30 backdrop-blur-md text-black text-sm font-medium py-2 px-4 rounded-lg shadow-lg hover:bg-white/30 hover:backdrop-blur-lg hover:shadow-xl transition-all duration-300 w-full"
+        >
+          🎬 Lihat trailer
+        </a>
+      </div>
+    ) : (
+      <div className="py-2 px-4 text-center text-gray-400 text-sm italic">
+        Tidak ada trailer
+      </div>
+    )}
+  </div>
+</div>
+
           );
         })}
       </div>
@@ -121,14 +133,14 @@ const App = () => {
             type="text"
             value={searchQuery}
             onChange={handleSearch}
-            placeholder="Search all anime..."
+            placeholder="Cari Anemu..."
             className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
         </div>
 
         <div className="container mx-auto px-4">
           <h1 className="text-left pt-4 text-3xl font-bold text-gray-900">
-            {searchQuery ? "Search Results" : "Top Anime"}
+            {searchQuery ? "Hasil Pencarian" : "Anem Teratas"}
           </h1>
           <AnimeList />
         </div>
